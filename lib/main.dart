@@ -12,6 +12,25 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                child: Text('header', style: TextStyle(color: Colors.white),),
+                decoration: BoxDecoration(
+                  color: Colors.blue
+                ),
+              ),
+              ListTile(
+                title: Text('item 1'),
+                onTap: () {
+                  print('test');
+                },
+              )
+            ],
+          ),
+        ),
         appBar: AppBar(
           title: Text('My First App'),
         ),
