@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -11,7 +12,38 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
+      home: MyPage()
+    );
+  }
+}
+
+
+class MyPage extends StatelessWidget {
+
+  void _showDialog(BuildContext context) {
+     showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('test dialog'),
+          content: Text('test content dialog'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      }
+    );
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
@@ -25,7 +57,13 @@ class MyApp extends StatelessWidget {
               ListTile(
                 title: Text('item 1'),
                 onTap: () {
-                  print('test');
+                  print('item 1');
+                },
+              ),
+              ListTile(
+                title: Text('item 2'),
+                onTap: () {
+                  print('item 2');
                 },
               )
             ],
@@ -54,14 +92,16 @@ class MyApp extends StatelessWidget {
                     ),
                   ),
                   color: Colors.blue,
-                  onPressed: () {},
+                  onPressed: () {
+                    _showDialog(context);
+                  },
                 ),
               ],
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
+
 
