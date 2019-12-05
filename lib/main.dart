@@ -37,10 +37,6 @@ class MyApp extends StatelessWidget {
                   color: Colors.blue,
                   onPressed: () {},
                 ),
-                FlatButton(
-                  child: Text('button'),
-                  onPressed: () {},
-                )
               ],
             ),
           ),
