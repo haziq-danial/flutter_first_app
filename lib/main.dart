@@ -81,6 +81,11 @@ class _MyPageState extends State<MyPage> {
                           }
                         },
                         onSaved: (val) => setState(() => _stringName = val),
+                        onTap: () {
+                          final form = _formKey.currentState;
+                          form.reset();
+                          FocusScope.of(context).unfocus();
+                        },
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
