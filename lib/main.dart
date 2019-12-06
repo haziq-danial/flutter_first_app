@@ -44,31 +44,7 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                child: Text('header', style: TextStyle(color: Colors.white),),
-                decoration: BoxDecoration(
-                  color: Colors.blue
-                ),
-              ),
-              ListTile(
-                title: Text('item 1'),
-                onTap: () {
-                  print('item 1');
-                },
-              ),
-              ListTile(
-                title: Text('item 2'),
-                onTap: () {
-                  print('item 2');
-                },
-              )
-            ],
-          ),
-        ),
+        drawer: CustomDrawer(),
         appBar: AppBar(
           title: Text('My First App'),
         ),
@@ -101,6 +77,37 @@ class MyPage extends StatelessWidget {
           ),
         ),
       );
+  }
+}
+
+class CustomDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            child: Text('header', style: TextStyle(color: Colors.white),),
+            decoration: BoxDecoration(
+              color: Colors.blue
+            ),
+          ),
+          ListTile(
+            title: Text('item 1'),
+            onTap: () {
+              print('item 1');
+            },
+          ),
+          ListTile(
+            title: Text('item 2'),
+            onTap: () {
+              print('item 2');
+            },
+          )
+        ],
+      ),
+    );
   }
 }
 
