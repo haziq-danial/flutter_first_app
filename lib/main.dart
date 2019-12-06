@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
       home: MyPage()
     );
@@ -18,15 +18,24 @@ class MyApp extends StatelessWidget {
 }
 
 
-class MyPage extends StatelessWidget {
+class MyPage extends StatefulWidget {
 
-  void _showDialog(BuildContext context) {
+  @override
+  _MyPageState createState() => _MyPageState();
+}
+
+class _MyPageState extends State<MyPage> {
+
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  String _stringName = '';
+
+  void _showDialog(BuildContext context, String stringName) {
      showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('test dialog'),
-          content: Text('test content dialog'),
+          content: Text(stringName),
           actions: <Widget>[
             FlatButton(
               child: Text('Close'),
@@ -40,7 +49,6 @@ class MyPage extends StatelessWidget {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,30 +57,62 @@ class MyPage extends StatelessWidget {
           title: Text('My First App'),
         ),
         body: Container(
-          child: Align(
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'Hello World',
-                  style: TextStyle(
-                    fontSize: 40
+          child: Builder(
+              builder: (context) => Form(
+              key: _formKey,
+              child: Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Enter String',
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Enter a string';
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (val) => setState(() => _stringName = val),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 10.0
+                            ),
+                            child: RaisedButton(
+                              color: Colors.green,
+                              shape: StadiumBorder(),
+                              child: Text(
+                                  'Submit',
+                                  style: TextStyle(
+                                    color: Colors.white
+                                  ),
+                                ),
+                              onPressed: () {
+                                final form = _formKey.currentState;
+                                if (form.validate()) {
+                                  form.save();
+                                  _showDialog(context, _stringName);
+                                }
+                              },
+                            ),
+                          )
+                        ],
+                      )
+                    ],
                   ),
                 ),
-                RaisedButton(
-                  child: Text(
-                    'Button',
-                    style: TextStyle(
-                      color: Colors.white
-                    ),
-                  ),
-                  color: Colors.blue,
-                  onPressed: () {
-                    _showDialog(context);
-                  },
-                ),
-              ],
+              ),
             ),
           ),
         ),
@@ -88,9 +128,9 @@ class CustomDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Text('header', style: TextStyle(color: Colors.white),),
+            child: null,
             decoration: BoxDecoration(
-              color: Colors.blue
+              color: Colors.green
             ),
           ),
           ListTile(
