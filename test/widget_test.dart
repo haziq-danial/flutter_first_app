@@ -20,10 +20,25 @@ class MyPage extends StatefulWidget {
   _MyPageState createState() => _MyPageState();
 }
 
-class _MyPageState extends State<MyPage> {
+class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = GlobalKey();
   String _stringName = '';
   bool _isCollapse = true;
+  AnimationController _animController;
+  Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animController =
+        AnimationController(duration: Duration(milliseconds: 30), vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _animController.dispose();
+    super.dispose();
+  }
 
   void _showDialog(BuildContext context, String stringName) {
     showDialog(
@@ -60,34 +75,56 @@ class _MyPageState extends State<MyPage> {
           ],
         ),
       ),
-      AnimatedContainer(
-        duration: new Duration(milliseconds: 300),
+      Positioned(
         child: Material(
           elevation: 8.0,
           child: Scaffold(
             body: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListView(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: InkWell(
+                child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(20),
+                    child: SafeArea(
+                      child: Row(
+                        children: <Widget>[
+                          InkWell(
                             child: Icon(
                               Icons.menu,
                               color: Colors.black,
                             ),
                             onTap: () {},
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                    Center(
-                      heightFactor: 4,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                  ),
+                  Stack(
+                    children: <Widget>[
+                      Container(
+                        color: Colors.red,
+                        child: SizedBox(
+                          width: 600,
+                          height: 200,
+                        ),
+                      ),
+                      Positioned(
+                        right: _screenWidth / 1.5,
+                        child: Container(
+                          color: Colors.blue,
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                         child: Builder(
                           builder: (context) => Form(
                             key: _formKey,
@@ -145,11 +182,11 @@ class _MyPageState extends State<MyPage> {
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                ],
               ),
-            ),
+            )),
           ),
         ),
       ),
