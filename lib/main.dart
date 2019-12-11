@@ -1,5 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inner_drawer/inner_drawer.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,7 +23,8 @@ class MyPage extends StatefulWidget {
 
 class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final GlobalKey<InnerDrawerState> _innerDrawerKey =
+      GlobalKey<InnerDrawerState>();
   String _stringName = '';
   bool _isCollapse = true;
 
@@ -52,18 +53,50 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
     final _screenHeight = _screenSize.height;
     final _screenWidth = _screenSize.width;
 
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white10,
-        actionsIconTheme: IconThemeData(color: Colors.black),
-        iconTheme: IconThemeData(
-          color: Colors.black,
+    return InnerDrawer(
+      key: _innerDrawerKey,
+      onTapClose: true,
+      swipe: true,
+      offset: IDOffset.only(bottom: 0, top: 0, right: 0, left: 0.5),
+      borderRadius: 20,
+      leftChild: Material(
+        child: ListView(
+          children: <Widget>[
+            ListTile(
+              title: Text('item 1'),
+              onTap: () {},
+            ),
+            ListTile(
+              title: Text('item 2'),
+              onTap: () {},
+            ),
+            ListTile(
+              title: Text('item 3'),
+              onTap: () {},
+            ),
+          ],
         ),
-        toolbarOpacity: 1.0,
       ),
-      drawer: CustomDrawer(),
-      body: Container(),
+      scaffold: Scaffold(
+        appBar: AppBar(
+          title: Text('My First App'),
+          leading: IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              _innerDrawerKey.currentState.toggle(
+                direction: InnerDrawerDirection.start
+              );
+            },
+          ),
+        ),
+        body: Container(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[Text('test')],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
