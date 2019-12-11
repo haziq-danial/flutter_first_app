@@ -83,19 +83,79 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
           leading: IconButton(
             icon: Icon(Icons.menu),
             onPressed: () {
-              _innerDrawerKey.currentState.toggle(
-                direction: InnerDrawerDirection.start
-              );
+              _innerDrawerKey.currentState
+                  .toggle(direction: InnerDrawerDirection.start);
             },
           ),
         ),
-        body: Container(
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[Text('test')],
+        body: SingleChildScrollView(
+            child: Container(
+              height: _screenHeight / 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Builder(
+                    builder: (context) => Form(
+                      key: _formKey,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Column(
+                            children: <Widget>[
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: 'Enter String',
+                                ),
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'Enter a string';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                onSaved: (val) =>
+                                    setState(() => _stringName = val),
+                                onTap: () {
+                                  final form = _formKey.currentState;
+                                  form.reset();
+                                  FocusScope.of(context).unfocus();
+                                },
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    child: RaisedButton(
+                                      color: Colors.green,
+                                      shape: StadiumBorder(),
+                                      child: Text(
+                                        'Submit',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onPressed: () {
+                                        final form = _formKey.currentState;
+                                        if (form.validate()) {
+                                          form.save();
+                                          _showDialog(context, _stringName);
+                                        }
+                                      },
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
       ),
     );
   }
