@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
+import 'custom_drawer.dart';
 
 void main() => runApp(MyApp());
 
@@ -63,24 +64,7 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
       swipe: true,
       offset: IDOffset.only(bottom: 0, top: 0, right: 0, left: 0.5),
       borderRadius: 20,
-      leftChild: Material(
-        child: ListView(
-          children: <Widget>[
-            ListTile(
-              title: Text('item 1'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: Text('item 2'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: Text('item 3'),
-              onTap: () {},
-            ),
-          ],
-        ),
-      ),
+      leftChild: CustomDrawer(),
       scaffold: Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -161,35 +145,6 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class CustomDrawer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            child: null,
-            decoration: BoxDecoration(color: Colors.green),
-          ),
-          ListTile(
-            title: Text('item 1'),
-            onTap: () {
-              print('item 1');
-            },
-          ),
-          ListTile(
-            title: Text('item 2'),
-            onTap: () {
-              print('item 2');
-            },
-          )
-        ],
       ),
     );
   }
