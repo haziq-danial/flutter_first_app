@@ -1,3 +1,6 @@
+import 'package:first_app/events_page.dart';
+import 'package:first_app/notes_page.dart';
+import 'package:first_app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
 import 'custom_drawer.dart';
@@ -17,7 +20,12 @@ class MyApp extends StatelessWidget {
                 iconTheme: IconThemeData(color: Colors.black),
               )
             ),
-        home: MyPage());
+        home: MyPage(),
+        routes: {
+          Routes.events: (context) => EventsPage(),
+          Routes.notes: (context) => NotesPage()
+        },
+      );
   }
 }
 
@@ -27,11 +35,18 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
+  
   final GlobalKey<FormState> _formKey = GlobalKey();
   final GlobalKey<InnerDrawerState> _innerDrawerKey =
       GlobalKey<InnerDrawerState>();
   String _stringName = '';
   bool _isCollapse = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   void _showDialog(BuildContext context, String stringName) {
     showDialog(
@@ -64,7 +79,7 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
       swipe: true,
       offset: IDOffset.only(bottom: 0, top: 0, right: 0, left: 0.5),
       borderRadius: 20,
-      leftChild: CustomDrawer(),
+      leftChild: CustomDrawer(pageName: 'Home',),
       scaffold: Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -118,7 +133,7 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 10.0),
                                   child: RaisedButton(
-                                    color: Colors.green,
+                                    color: Colors.teal,
                                     shape: StadiumBorder(),
                                     child: Text(
                                       'Submit',
