@@ -89,8 +89,8 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
             decoration: BoxDecoration(
               image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: NetworkImage(
-                      'https://images.unsplash.com/photo-1548291616-bfccc8db731d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1482&q=80')),
+                  image: AssetImage(
+                      'assets/sunflower.jpg')),
             ),
             child: BackdropFilter(
               filter: prefix0.ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
