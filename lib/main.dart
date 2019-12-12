@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
 import 'custom_drawer.dart';
 
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -173,7 +174,7 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
                                 style: TextStyle(
                                   color: Colors.white, 
                                   fontSize: 30,
-                                  fontWeight: FontWeight.w100,
+                                  fontWeight: FontWeight.w200,
                                 ),
                               )
                             )
