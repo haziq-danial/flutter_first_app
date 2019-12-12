@@ -1,4 +1,11 @@
+import 'dart:ui' as prefix0;
+
+import 'package:first_app/events_page.dart';
+import 'package:first_app/notes_page.dart';
+import 'package:first_app/routes/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inner_drawer/inner_drawer.dart';
+import 'package:first_app/custom_drawer.dart';
 
 void main() => runApp(MyApp());
 
@@ -6,12 +13,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-        ),
-        home: MyPage());
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+          primarySwatch: Colors.grey,
+          appBarTheme: AppBarTheme(
+              color: Colors.white10,
+              iconTheme: IconThemeData(color: Colors.white),
+              actionsIconTheme: IconThemeData(color: Colors.white))),
+      home: MyPage(),
+      routes: {
+        Routes.events: (context) => EventsPage(),
+        Routes.notes: (context) => NotesPage()
+      },
+    );
   }
 }
 
@@ -22,22 +37,14 @@ class MyPage extends StatefulWidget {
 
 class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<InnerDrawerState> _innerDrawerKey =
+      GlobalKey<InnerDrawerState>();
   String _stringName = '';
   bool _isCollapse = true;
-  AnimationController _animController;
-  Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
-    _animController =
-        AnimationController(duration: Duration(milliseconds: 30), vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _animController.dispose();
-    super.dispose();
   }
 
   void _showDialog(BuildContext context, String stringName) {
@@ -65,158 +72,98 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
     final _screenHeight = _screenSize.height;
     final _screenWidth = _screenSize.width;
 
-    return Stack(children: <Widget>[
-      Drawer(
-        child: ListView(
-          children: <Widget>[
-            ListTile(
-              title: Text('item 1'),
-            )
-          ],
-        ),
+    return InnerDrawer(
+      key: _innerDrawerKey,
+      onTapClose: true,
+      swipe: true,
+      offset: IDOffset.only(bottom: 0, top: 0, right: 0, left: 0.5),
+      borderRadius: 20,
+      leftChild: CustomDrawer(
+        pageName: 'Home',
       ),
-      Positioned(
-        child: Material(
-          elevation: 8.0,
-          child: Scaffold(
-            body: Container(
-                child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(20),
-                    child: SafeArea(
-                      child: Row(
-                        children: <Widget>[
-                          InkWell(
-                            child: Icon(
-                              Icons.menu,
-                              color: Colors.black,
-                            ),
-                            onTap: () {},
-                          ),
-                        ],
-                      ),
+      scaffold: Stack(
+        overflow: Overflow.clip,
+        children: <Widget>[
+          Container(
+            height: _screenHeight,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: NetworkImage(
+                      'https://images.unsplash.com/photo-1548291616-bfccc8db731d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1482&q=80')),
+            ),
+            child: BackdropFilter(
+              filter: prefix0.ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+              child: Container(
+                decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
+              ),
+            ),
+          ),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              centerTitle: true,
+              title: OutlineButton(
+                borderSide: BorderSide(
+                color: Colors.white, style: BorderStyle.solid, width: 1),
+                highlightedBorderColor: Colors.white30,
+                shape: StadiumBorder(),
+                padding: EdgeInsets.only(
+                    bottom: 2.0, top: 2.0, left: 40.0, right: 0.0),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      'ACCOUNTS',
+                      style: TextStyle(color: Colors.white),
                     ),
-                  ),
-                  Stack(
-                    children: <Widget>[
-                      Container(
-                        color: Colors.red,
-                        child: SizedBox(
-                          width: 600,
-                          height: 200,
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 2.0),
+                      child: Icon(
+                        Icons.keyboard_arrow_down,
+                        color: Colors.white,
                       ),
-                      Positioned(
-                        right: _screenWidth / 1.5,
-                        child: Container(
-                          color: Colors.blue,
-                          child: SizedBox(
-                            width: 50,
-                            height: 50,
-                          ),
-                        ),
+                    )
+                  ],
+                ),
+                onPressed: () {},
+              ),
+              leading: IconButton(
+                icon: Icon(Icons.menu),
+                onPressed: () {
+                  _innerDrawerKey.currentState
+                      .toggle(direction: InnerDrawerDirection.start);
+                },
+              ),
+              actions: <Widget>[
+                RawMaterialButton(
+                  child: Column(
+                    children: <Widget>[
+                      Icon(Icons.lock_open),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Text('LOGOUT', style: TextStyle(color: Colors.white, fontSize: 9),),
                       )
                     ],
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                        child: Builder(
-                          builder: (context) => Form(
-                            key: _formKey,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Column(
-                                children: <Widget>[
-                                  TextFormField(
-                                    decoration: InputDecoration(
-                                      labelText: 'Enter String',
-                                    ),
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return 'Enter a string';
-                                      } else {
-                                        return null;
-                                      }
-                                    },
-                                    onSaved: (val) =>
-                                        setState(() => _stringName = val),
-                                    onTap: () {
-                                      final form = _formKey.currentState;
-                                      form.reset();
-                                      FocusScope.of(context).unfocus();
-                                    },
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10.0),
-                                        child: RaisedButton(
-                                          color: Colors.green,
-                                          shape: StadiumBorder(),
-                                          child: Text(
-                                            'Submit',
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                          onPressed: () {
-                                            final form = _formKey.currentState;
-                                            if (form.validate()) {
-                                              form.save();
-                                              _showDialog(context, _stringName);
-                                            }
-                                          },
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  onPressed: () {},
+                )
+              ],
+            ),
+            body: SingleChildScrollView(
+              child: PageView(
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  Container(
+                    height: 40,
+                    width: 40,
+                    color: Colors.red,
+                  )
                 ],
-              ),
-            )),
+              )
+            ),
           ),
-        ),
-      ),
-    ]);
-  }
-}
-
-class CustomDrawer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            child: null,
-            decoration: BoxDecoration(color: Colors.green),
-          ),
-          ListTile(
-            title: Text('item 1'),
-            onTap: () {
-              print('item 1');
-            },
-          ),
-          ListTile(
-            title: Text('item 2'),
-            onTap: () {
-              print('item 2');
-            },
-          )
         ],
       ),
     );
