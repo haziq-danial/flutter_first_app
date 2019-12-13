@@ -88,11 +88,11 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
       scaffold: Stack(
         children: <Widget>[
           Container(
-            height: _screenHeight,
+            height: _screenHeight / 2.732,
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image: AssetImage('assets/sunflower.jpg'),
+                image: AssetImage('assets/city-backdrop1.jpg'),
               ),
             ),
           ),
@@ -160,7 +160,7 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
                   child: PageView(
                     children: <Widget>[
                       Container(
-                        color: Colors.red,
+                        color: Colors.transparent,
                         child: Stack(
                           children: <Widget>[
                             Positioned(
@@ -178,14 +178,99 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
                         ),
                       ),
                       Container(
-                        color: Colors.blue,
+                        color: Colors.transparent,
+                        child: Stack(
+                          children: <Widget>[
+                            Positioned(
+                                top: _screenHeight / 14,
+                                left: _screenWidth / 3,
+                                child: Text(
+                                  'RM 422',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w200,
+                                  ),
+                                ))
+                          ],
+                        ),
                       ),
                       Container(
-                        color: Colors.green,
+                        color: Colors.transparent,
+                        child: Stack(
+                          children: <Widget>[
+                            Positioned(
+                                top: _screenHeight / 14,
+                                left: _screenWidth / 3,
+                                child: Text(
+                                  'RM 422',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w200,
+                                  ),
+                                ))
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
+                Container(
+                    height: _screenHeight / 1.577,
+                    width: _screenWidth,
+                    color: Colors.white,
+                    child: Material(
+                      child: ListView(
+                        children: ListTile.divideTiles(
+                          context: context,
+                          tiles: [
+                            ListTile(
+                              contentPadding: EdgeInsets.only(
+                                  top: 8.0,
+                                  bottom: 8.0,
+                                  left: 20.0,
+                                  right: 30.0),
+                              dense: true,
+                              title: Text('Personal Saver Account-i'),
+                              subtitle: Text('{{Account number}}'),
+                              trailing: Text('RM 422'),
+                              onTap: () {
+                                print('test');
+                              },
+                            ),
+                            ListTile(
+                              contentPadding: EdgeInsets.only(
+                                  top: 8.0,
+                                  bottom: 8.0,
+                                  left: 20.0,
+                                  right: 30.0),
+                              dense: true,
+                              title: Text('Personal Saver Account-i'),
+                              subtitle: Text('{{Account number}}'),
+                              trailing: Text('RM 422'),
+                              onTap: () {
+                                print('test');
+                              },
+                            ),
+                            ListTile(
+                              contentPadding: EdgeInsets.only(
+                                  top: 8.0,
+                                  bottom: 8.0,
+                                  left: 20.0,
+                                  right: 30.0),
+                              dense: true,
+                              title: Text('Personal Saver Account-i'),
+                              subtitle: Text('{{Account number}}'),
+                              trailing: Text('RM 422'),
+                              onTap: () {
+                                print('test');
+                              },
+                            ),
+                          ],
+                        ).toList(),
+                      ),
+                    ))
               ],
             )),
           ),
