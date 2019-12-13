@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
 import 'custom_drawer.dart';
 
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -37,16 +36,10 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
-  final GlobalKey<FormState> _formKey = GlobalKey();
   final GlobalKey<InnerDrawerState> _innerDrawerKey =
       GlobalKey<InnerDrawerState>();
   String _stringName = '';
   bool _isCollapse = true;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   void _showDialog(BuildContext context, String stringName) {
     showDialog(
@@ -65,6 +58,16 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
             ],
           );
         });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -88,14 +91,8 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
             height: _screenHeight,
             decoration: BoxDecoration(
               image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage(
-                      'assets/sunflower.jpg')),
-            ),
-            child: BackdropFilter(
-              filter: prefix0.ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-              child: Container(
-                decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
+                fit: BoxFit.fill,
+                image: AssetImage('assets/sunflower.jpg'),
               ),
             ),
           ),
@@ -167,17 +164,16 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
                         child: Stack(
                           children: <Widget>[
                             Positioned(
-                              top: _screenHeight / 14,
-                              left: _screenWidth / 3,
-                              child: Text(
-                                'RM 422',
-                                style: TextStyle(
-                                  color: Colors.white, 
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w200,
-                                ),
-                              )
-                            )
+                                top: _screenHeight / 14,
+                                left: _screenWidth / 3,
+                                child: Text(
+                                  'RM 422',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w200,
+                                  ),
+                                ))
                           ],
                         ),
                       ),

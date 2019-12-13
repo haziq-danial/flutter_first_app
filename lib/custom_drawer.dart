@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
 import 'routes/routes.dart';
-import 'package:flutter_inner_drawer/inner_drawer.dart';
 
 class CustomDrawer extends StatelessWidget {
-  String pageName = '';
+  final String pageName;
   CustomDrawer({@required this.pageName});
 
   @override
